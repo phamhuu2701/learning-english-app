@@ -223,6 +223,7 @@ class Home extends Component {
             <p className="caption">
               {JSON.stringify(vocalbularySelected.vi)
                 .replace(/"/g, '')
+                .replace(/,/g, ', ')
                 .replace(/\[/g, '')
                 .replace(/]/g, '')}
             </p>
