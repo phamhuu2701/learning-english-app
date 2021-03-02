@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/learning-english-app/static/css/main.9d26df0a.chunk.css",
+    "main.css": "/learning-english-app/static/css/main.1614425e.chunk.css",
     "main.js": "/learning-english-app/static/js/main.478dc6d0.chunk.js",
     "main.js.map": "/learning-english-app/static/js/main.478dc6d0.chunk.js.map",
     "runtime-main.js": "/learning-english-app/static/js/runtime-main.1c1e1d61.js",
@@ -12,14 +12,14 @@
     "static/js/3.b46bb96a.chunk.js.map": "/learning-english-app/static/js/3.b46bb96a.chunk.js.map",
     "index.html": "/learning-english-app/index.html",
     "static/css/2.31ff0196.chunk.css.map": "/learning-english-app/static/css/2.31ff0196.chunk.css.map",
-    "static/css/main.9d26df0a.chunk.css.map": "/learning-english-app/static/css/main.9d26df0a.chunk.css.map",
+    "static/css/main.1614425e.chunk.css.map": "/learning-english-app/static/css/main.1614425e.chunk.css.map",
     "static/js/2.aa51416c.chunk.js.LICENSE.txt": "/learning-english-app/static/js/2.aa51416c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1c1e1d61.js",
     "static/css/2.31ff0196.chunk.css",
     "static/js/2.aa51416c.chunk.js",
-    "static/css/main.9d26df0a.chunk.css",
+    "static/css/main.1614425e.chunk.css",
     "static/js/main.478dc6d0.chunk.js"
   ]
 }
