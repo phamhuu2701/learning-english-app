@@ -231,7 +231,7 @@ class Home extends Component {
           )}
         </div>
 
-        {vocalbularySelected && (
+        {vocalbularySelected && categorySelected?.items.length > 0 && (
           <div className="body-main">
             {vocalbularySelected.imageUrl && (
               <img alt={vocalbularySelected.en[0]} src={vocalbularySelected.imageUrl} />
@@ -262,8 +262,7 @@ class Home extends Component {
                 formData: { value: e.target.value, errMsg: '' },
               })
             }
-            // onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
-            disabled={formData.errMsg}
+            disabled={formData.errMsg || categorySelected?.items.length === 0}
           />
           {formData.errMsg ? (
             <Button

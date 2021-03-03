@@ -1,12 +1,16 @@
 import school_supplies from './school_supplies'
 import actions from './actions'
 import numbers from './numbers'
+import colours from './colours'
+import time from './time'
 
 const obj = JSON.parse(
   JSON.stringify({
-    school_supplies,
-    actions,
     numbers,
+    colours,
+    time,
+    // school_supplies,
+    // actions,
   })
 )
 
