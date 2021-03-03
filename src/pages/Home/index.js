@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Button, Dropdown, Form, Modal } from 'react-bootstrap'
 import default_categories from '../../data/default_categories'
-import { CATEGORIES, CATEGORY_SELECTED } from '../../utils/localStorage'
+import { CATEGORY_SELECTED } from '../../utils/localStorage'
 import './styles.css'
 
-let COUNT = 10
+let COUNT = 5
 
 const INTITIAL_STATE = {
   categories: null,
@@ -21,14 +21,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    let _categories = CATEGORIES.get()
-    if (_categories) {
-      _categories = JSON.parse(_categories)
-    } else {
-      _categories = JSON.parse(JSON.stringify(default_categories))
-
-      CATEGORIES.set(JSON.stringify(_categories))
-    }
+    let _categories = JSON.parse(JSON.stringify(default_categories))
 
     let _categorySelected = CATEGORY_SELECTED.get()
     if (_categorySelected) {
@@ -195,7 +188,6 @@ class Home extends Component {
               <hr />
               <Dropdown.Item
                 onClick={() => {
-                  CATEGORIES.delete()
                   CATEGORY_SELECTED.delete()
                   window.location.reload()
                 }}
@@ -218,7 +210,9 @@ class Home extends Component {
 
         {vocalbularySelected && (
           <div className="body-main">
-            <img alt={vocalbularySelected.en[0]} src={vocalbularySelected.imageUrl} />
+            {vocalbularySelected.imageUrl && (
+              <img alt={vocalbularySelected.en[0]} src={vocalbularySelected.imageUrl} />
+            )}
 
             <p className="caption">
               {JSON.stringify(vocalbularySelected.vi)
@@ -229,37 +223,35 @@ class Home extends Component {
             </p>
 
             {formData.errMsg && <div className="error-block">{formData.errMsg}</div>}
+          </div>
+        )}
 
-            {formData.errMsg ? (
-              <div className="form-main form-main-next">
-                <Button variant="danger" onClick={() => this.handleNextVocabulary()}>
-                  Next
-                </Button>
-              </div>
-            ) : (
-              <div className="form-main">
-                <Form.Control
-                  autoFocus
-                  type="text"
-                  placeholder="Enter text"
-                  value={formData.value}
-                  onChange={(e) =>
-                    this.setState({
-                      formData: { value: e.target.value, errMsg: '' },
-                    })
-                  }
-                  onKeyDown={(e) =>
-                    formData.value && e.key === 'Enter' ? this.handleSubmit() : null
-                  }
-                />
-                <Button
-                  variant={formData.value ? 'primary' : 'light'}
-                  onClick={() => (formData.value ? this.handleSubmit() : null)}
-                >
-                  Submit
-                </Button>
-              </div>
-            )}
+        {formData.errMsg ? (
+          <div className="form-main form-main-next">
+            <Button variant="danger" onClick={() => this.handleNextVocabulary()}>
+              Next
+            </Button>
+          </div>
+        ) : (
+          <div className="form-main">
+            <Form.Control
+              autoFocus
+              type="text"
+              placeholder="Enter text"
+              value={formData.value}
+              onChange={(e) =>
+                this.setState({
+                  formData: { value: e.target.value, errMsg: '' },
+                })
+              }
+              onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
+            />
+            <Button
+              variant={formData.value ? 'primary' : 'light'}
+              onClick={() => (formData.value ? this.handleSubmit() : null)}
+            >
+              Submit
+            </Button>
           </div>
         )}
 

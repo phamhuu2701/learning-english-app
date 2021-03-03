@@ -1,5 +1,11 @@
 .Home {
-  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .Home .header {
@@ -8,19 +14,19 @@
   align-items: center;
 }
 
-.Home .header-total {
+.Home .header .header-total {
   font-size: 1.2em;
 }
 
-.Home .header-total .__total {
+.Home .header .header-total .__total {
   font-weight: 500;
 }
 
-.Home .header-total .__progress {
-  margin-left: 5px;
+.Home .header .header-total .__progress {
+  margin-left: 10px;
 }
 
-.Home img {
+.Home .body-main img {
   width: 100%;
   height: 240px;
   object-fit: contain;
@@ -33,14 +39,26 @@
   text-align: center;
 }
 
+.Home .body-main .error-block {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.5em;
+  border: 1px solid #ea8c95;
+  border-radius: 8px;
+  background-color: #fef8f8;
+  color: #dc3545;
+  font-weight: 500;
+}
+
 .Home .form-main {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  position: absolute;
+  /* position: absolute;
   width: calc(100% - 40px);
   left: auto;
-  bottom: 20px;
+  bottom: 20px; */
 }
 
 .Home .form-main input {
@@ -53,16 +71,4 @@
 .Home .form-main-next button {
   flex: 1;
   margin-left: 0;
-}
-
-.Home .error-block {
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 1.5em;
-  border: 1px solid #ea8c95;
-  border-radius: 8px;
-  background-color: #fef8f8;
-  color: #dc3545;
-  font-weight: 500;
 }
