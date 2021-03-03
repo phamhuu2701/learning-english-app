@@ -18,40 +18,7 @@ class Home extends Component {
   constructor(props) {
     super(props)
     this.state = JSON.parse(JSON.stringify(INTITIAL_STATE))
-  }
-
-  componentDidMount() {
-    let _categories = JSON.parse(JSON.stringify(default_categories))
-
-    let _categorySelected = CATEGORY_SELECTED.get()
-    if (_categorySelected) {
-      _categorySelected = JSON.parse(_categorySelected)
-    } else {
-      let _items = []
-      for (let i = 0, leng = _categories[0].items.length; i < leng; i++) {
-        for (let j = 0; j < COUNT; j++) {
-          _items.push({
-            ..._categories[0].items[(COUNT * i + j) % _categories[0].items.length],
-            id: _categories[0].key + '_' + (COUNT * i + j),
-          })
-        }
-      }
-      _categorySelected = {
-        ..._categories[0],
-        items: _items,
-      }
-
-      CATEGORY_SELECTED.set(JSON.stringify(_categorySelected))
-    }
-
-    let random = Math.floor(Math.random() * _categorySelected.items.length)
-    let vocalbularySelected = _categorySelected.items[random]
-
-    this.setState({
-      categories: _categories,
-      categorySelected: _categorySelected,
-      vocalbularySelected,
-    })
+    this.inputRef = React.createRef()
   }
 
   /**
@@ -116,6 +83,10 @@ class Home extends Component {
       let str = ''
       vocalbularySelected.en.forEach((item) => (str += str ? ` or ${item}` : item))
       _formData = { ...formData, errMsg: str }
+
+      console.clear()
+      console.table(vocalbularySelected)
+      console.table(formData)
     }
 
     let _categorySelected = {
@@ -143,6 +114,58 @@ class Home extends Component {
       vocalbularySelected: _vocalbularySelected,
       formData: { value: '', errMsg: '' },
     })
+  }
+
+  handleOnKeyDown = (e) => {
+    const { formData } = this.state
+
+    if (e.key === 'Enter' && formData.value) {
+      if (!formData.errMsg) {
+        this.handleSubmit()
+      } else {
+        this.handleNextVocabulary()
+      }
+    }
+  }
+
+  componentDidMount() {
+    let _categories = JSON.parse(JSON.stringify(default_categories))
+
+    let _categorySelected = CATEGORY_SELECTED.get()
+    if (_categorySelected) {
+      _categorySelected = JSON.parse(_categorySelected)
+    } else {
+      let _items = []
+      for (let i = 0, leng = _categories[0].items.length; i < leng; i++) {
+        for (let j = 0; j < COUNT; j++) {
+          _items.push({
+            ..._categories[0].items[(COUNT * i + j) % _categories[0].items.length],
+            id: _categories[0].key + '_' + (COUNT * i + j),
+          })
+        }
+      }
+      _categorySelected = {
+        ..._categories[0],
+        items: _items,
+      }
+
+      CATEGORY_SELECTED.set(JSON.stringify(_categorySelected))
+    }
+
+    let random = Math.floor(Math.random() * _categorySelected.items.length)
+    let vocalbularySelected = _categorySelected.items[random]
+
+    this.setState({
+      categories: _categories,
+      categorySelected: _categorySelected,
+      vocalbularySelected,
+    })
+
+    window.addEventListener('keydown', (e) => this.handleOnKeyDown(e))
+  }
+
+  componentDidUpdate() {
+    this.inputRef.focus()
   }
 
   render() {
@@ -228,7 +251,9 @@ class Home extends Component {
 
         <div className="form-main">
           <Form.Control
-            autoFocus
+            ref={(_ref) => {
+              this.inputRef = _ref
+            }}
             type="text"
             placeholder="Enter text"
             value={formData.value}
@@ -237,11 +262,16 @@ class Home extends Component {
                 formData: { value: e.target.value, errMsg: '' },
               })
             }
-            onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
+            // onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
             disabled={formData.errMsg}
           />
           {formData.errMsg ? (
-            <Button variant="danger" onClick={() => this.handleNextVocabulary()}>
+            <Button
+              variant="danger"
+              onClick={() => {
+                this.handleNextVocabulary()
+              }}
+            >
               NEXT
             </Button>
           ) : (
