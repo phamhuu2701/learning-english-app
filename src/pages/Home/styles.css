@@ -55,10 +55,6 @@
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  /* position: absolute;
-  width: calc(100% - 40px);
-  left: auto;
-  bottom: 20px; */
 }
 
 .Home .form-main input {
@@ -67,8 +63,5 @@
 
 .Home .form-main button {
   margin-left: 20px;
-}
-.Home .form-main-next button {
-  flex: 1;
-  margin-left: 0;
+  min-width: 100px;
 }

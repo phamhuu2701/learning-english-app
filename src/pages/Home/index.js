@@ -226,34 +226,33 @@ class Home extends Component {
           </div>
         )}
 
-        {formData.errMsg ? (
-          <div className="form-main form-main-next">
+        <div className="form-main">
+          <Form.Control
+            autoFocus
+            type="text"
+            placeholder="Enter text"
+            value={formData.value}
+            onChange={(e) =>
+              this.setState({
+                formData: { value: e.target.value, errMsg: '' },
+              })
+            }
+            onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
+            disabled={formData.errMsg}
+          />
+          {formData.errMsg ? (
             <Button variant="danger" onClick={() => this.handleNextVocabulary()}>
-              Next
+              NEXT
             </Button>
-          </div>
-        ) : (
-          <div className="form-main">
-            <Form.Control
-              autoFocus
-              type="text"
-              placeholder="Enter text"
-              value={formData.value}
-              onChange={(e) =>
-                this.setState({
-                  formData: { value: e.target.value, errMsg: '' },
-                })
-              }
-              onKeyDown={(e) => (formData.value && e.key === 'Enter' ? this.handleSubmit() : null)}
-            />
+          ) : (
             <Button
               variant={formData.value ? 'primary' : 'light'}
               onClick={() => (formData.value ? this.handleSubmit() : null)}
             >
-              Submit
+              SUBMIT
             </Button>
-          </div>
-        )}
+          )}
+        </div>
 
         {confirmChangeCategories && (
           <Modal show={true} onHide={() => this.setState({ confirmChangeCategories: null })}>
