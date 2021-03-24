@@ -1,7 +1,7 @@
 .Home {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: flex-end;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -15,6 +15,9 @@
   justify-content: space-between;
   align-items: center;
   margin: 20px;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 50px);
 }
 
 .Home .body-main {
@@ -31,7 +34,7 @@
   text-align: center;
 }
 
-.Home .body-main .caption {
+.Home .body-main .caption-small {
   font-size: 0.8em;
 }
 
