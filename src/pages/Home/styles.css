@@ -1,55 +1,47 @@
 .Home {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   position: absolute;
   height: 100%;
   width: 100%;
+  font-size: 2em;
+  color: #444;
+  padding: 5px;
 }
 
 .Home .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 20px;
 }
 
-.Home .header .header-total {
-  font-size: 1.2em;
+.Home .body-main {
+  margin: 20px;
 }
 
-.Home .header .header-total .__total {
-  font-weight: 500;
-}
-
-.Home .header .header-total .__progress {
-  margin-left: 10px;
-}
-
-.Home .body-main img {
-  width: 100%;
-  height: 240px;
-  object-fit: contain;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
-  margin: 20px 0;
+.Home .body-main .body-main-item {
+  min-height: 100px;
+  margin-bottom: 20px;
 }
 
 .Home .body-main .caption {
+  padding: 20px;
   text-align: center;
-  font-size: 1.2em;
+}
+
+.Home .body-main .caption {
+  font-size: 0.8em;
 }
 
 .Home .body-main .error-block {
-  padding: 10px 20px;
-  margin-bottom: 20px;
+  padding: 20px;
   text-align: center;
-  font-size: 1.5em;
   border: 1px solid #ea8c95;
   border-radius: 8px;
   background-color: #fef8f8;
   color: #dc3545;
-  font-weight: 500;
 }
 
 .Home .form-main {
@@ -60,9 +52,12 @@
 
 .Home .form-main input {
   flex: 1;
+  height: 100%;
+  font-size: 0.8em;
 }
 
 .Home .form-main button {
-  margin-left: 20px;
-  min-width: 100px;
+  margin-left: 10px;
+  min-width: 160px;
+  font-size: 1em;
 }

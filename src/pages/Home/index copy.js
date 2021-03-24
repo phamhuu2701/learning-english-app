@@ -4,13 +4,14 @@ import default_categories from '../../data/default_categories'
 import { CATEGORY_SELECTED } from '../../utils/localStorage'
 import './styles.css'
 
-const REPEAT_COUNT = 0
+let COUNT = 5
 
 const INTITIAL_STATE = {
+  categories: null,
   categorySelected: null,
+  confirmChangeCategories: null,
   vocalbularySelected: null,
   formData: { value: '', errMsg: '' },
-  confirmChangeCategories: null,
 }
 
 class Home extends Component {
@@ -19,16 +20,24 @@ class Home extends Component {
     this.state = JSON.parse(JSON.stringify(INTITIAL_STATE))
     this.inputRef = React.createRef()
   }
-  
+
   /**
-   * 
-   * @param {Object} categorySelected 
+   *
+   * @param {Object} categorySelected
    */
   handleChangeCategory = (categorySelected) => {
-    let _categorySelected = categorySelected
-    _categorySelected.items.forEach(item => item.id = _categorySelected.key + '_' + item.en[0].replace('/ /g', '_') + '_' + Date.now())
-    for (let i=0; i<REPEAT_COUNT; i++){
-      _categorySelected.items = [..._categorySelected.items, ..._categorySelected.items]
+    let _items = []
+    for (let i = 0, leng = categorySelected.items.length; i < leng; i++) {
+      for (let j = 0; j < COUNT; j++) {
+        _items.push({
+          ...categorySelected.items[(COUNT * i + j) % categorySelected.items.length],
+          id: categorySelected.key + '_' + (COUNT * i + j),
+        })
+      }
+    }
+    let _categorySelected = {
+      ...categorySelected,
+      items: _items,
     }
 
     let random = Math.floor(Math.random() * _categorySelected.items.length)
@@ -36,45 +45,54 @@ class Home extends Component {
 
     this.setState({
       categorySelected: _categorySelected,
+      confirmChangeCategories: null,
       vocalbularySelected: _vocalbularySelected,
-      formData: { value: '', errMsg: '' },
-      confirmChangeCategories: null
     })
 
     CATEGORY_SELECTED.set(JSON.stringify(_categorySelected))
   }
 
   handleSubmit = () => {
-    const { categorySelected, vocalbularySelected, formData } = this.state
+    const { formData, categorySelected, vocalbularySelected } = this.state
 
-    let _categorySelected = JSON.parse(JSON.stringify(categorySelected))
-    let _vocalbularySelected = JSON.parse(JSON.stringify(vocalbularySelected))
-    let _formData = JSON.parse(JSON.stringify(formData))
+    let correctCount = categorySelected.correctCount
+    let _items = []
+    let _formData = { ...formData }
+    let _vocalbularySelected = { ...vocalbularySelected }
 
-    if (_vocalbularySelected.en.includes(_formData.value.trim().toLowerCase())) {
-      _categorySelected.correctCount = _categorySelected.correctCount + 1
+    if (vocalbularySelected.en.includes(formData.value.trim().toLowerCase())) {
+      correctCount = categorySelected.correctCount + 1
 
-      let _items = []
-      for (let i = 0; i < _categorySelected.items.length; i++) {
-        if (_categorySelected.items[i].id !== _vocalbularySelected.id) {
-          _items.push(_categorySelected.items[i])
+      for (let i = 0; i < categorySelected.items.length; i++) {
+        if (categorySelected.items[i].id !== vocalbularySelected.id) {
+          _items.push(categorySelected.items[i])
         }
       }
-      _categorySelected.items = _items
-
-      let random = Math.floor(Math.random() * _categorySelected.items.length)
-      _vocalbularySelected = _categorySelected.items[random]
 
       _formData = { value: '', errMsg: '' }
+
+      let random = Math.floor(Math.random() * categorySelected.items.length)
+      _vocalbularySelected = categorySelected.items[random]
     } else {
-      _categorySelected.items.push({
-        ..._vocalbularySelected,
-        id: _categorySelected.key + '_' + _vocalbularySelected.en[0].replace('/ /g', '_') + '_' + Date.now()
+      _items = [...categorySelected.items]
+      _items.push({
+        ...vocalbularySelected,
+        id: categorySelected.key + '_' + Date.now(),
       })
 
       let str = ''
-      _vocalbularySelected.en.forEach((item) => (str += str ? ` or ${item}` : item))
-      _formData = { ..._formData, errMsg: str }
+      vocalbularySelected.en.forEach((item) => (str += str ? ` or ${item}` : item))
+      _formData = { ...formData, errMsg: str }
+
+      console.clear()
+      console.table(vocalbularySelected)
+      console.table(formData)
+    }
+
+    let _categorySelected = {
+      ...categorySelected,
+      correctCount,
+      items: _items,
     }
 
     this.setState({
@@ -87,11 +105,10 @@ class Home extends Component {
   }
 
   handleNextVocabulary = () => {
-    let _categorySelected = CATEGORY_SELECTED.get()
-    _categorySelected = JSON.parse(_categorySelected)
+    const { categorySelected } = this.state
 
-    let random = Math.floor(Math.random() * _categorySelected.items.length)
-    let _vocalbularySelected = _categorySelected.items[random]
+    let random = Math.floor(Math.random() * categorySelected.items.length)
+    let _vocalbularySelected = categorySelected.items[random]
 
     this.setState({
       vocalbularySelected: _vocalbularySelected,
@@ -118,42 +135,56 @@ class Home extends Component {
     if (_categorySelected) {
       _categorySelected = JSON.parse(_categorySelected)
     } else {
-      _categorySelected = _categories[0]
-      _categorySelected.items.forEach(item => item.id = _categorySelected.key + '_' + item.en[0].replace('/ /g', '_') + '_' + Date.now())
-      for (let i=0; i<REPEAT_COUNT; i++){
-        _categorySelected.items = [..._categorySelected.items, ..._categorySelected.items]
+      let _items = []
+      for (let i = 0, leng = _categories[0].items.length; i < leng; i++) {
+        for (let j = 0; j < COUNT; j++) {
+          _items.push({
+            ..._categories[0].items[(COUNT * i + j) % _categories[0].items.length],
+            id: _categories[0].key + '_' + (COUNT * i + j),
+          })
+        }
+      }
+      _categorySelected = {
+        ..._categories[0],
+        items: _items,
       }
 
       CATEGORY_SELECTED.set(JSON.stringify(_categorySelected))
     }
-    
+
     let random = Math.floor(Math.random() * _categorySelected.items.length)
-    let _vocalbularySelected = _categorySelected.items[random]
+    let vocalbularySelected = _categorySelected.items[random]
 
     this.setState({
+      categories: _categories,
       categorySelected: _categorySelected,
-      vocalbularySelected: _vocalbularySelected,
+      vocalbularySelected,
     })
 
     window.addEventListener('keydown', (e) => this.handleOnKeyDown(e))
   }
 
   componentDidUpdate() {
-    this.inputRef?.focus?.()
+    this.inputRef.focus()
   }
 
   render() {
     const {
+      categories,
       categorySelected,
+      confirmChangeCategories,
       vocalbularySelected,
       formData,
-      confirmChangeCategories,
     } = this.state
 
-    let progress =
+    let __progress =
       categorySelected?.items?.length > 0
-        ? Math.ceil((categorySelected.correctCount / (categorySelected.correctCount + categorySelected.items.length)) * 100)
-        : 100
+        ? Math.ceil(
+            (categorySelected.correctCount /
+              (categorySelected.correctCount + categorySelected.items.length)) *
+              100
+          )
+        : 0
 
     return (
       <div className="Home">
@@ -164,7 +195,8 @@ class Home extends Component {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              {default_categories.map((item) => (
+              {categories?.length > 0 &&
+                categories.map((item) => (
                   <Dropdown.Item
                     key={item.key}
                     onClick={() =>
@@ -189,78 +221,67 @@ class Home extends Component {
           </Dropdown>
 
           {categorySelected && (
-            <div>
-              <span>
-                {categorySelected.correctCount}/{categorySelected.correctCount + categorySelected.items.length}
+            <div className="header-total">
+              <span className="__total">
+                {categorySelected.correctCount}/
+                {categorySelected.correctCount + categorySelected.items.length}
               </span>
-              <span style={{marginLeft: 10}}>({progress}%)</span>
+              <span className="__progress">({__progress}%)</span>
             </div>
           )}
         </div>
 
         {vocalbularySelected && categorySelected?.items.length > 0 && (
           <div className="body-main">
-            <div className="body-main-item">
-              <div className="caption">
-                {JSON.stringify(vocalbularySelected.vi)
-                  .replace(/"/g, '')
-                  .replace(/,/g, ', ')
-                  .replace(/\[/g, '')
-                  .replace(/]/g, '')}
-              </div>
-            </div>
-
-            <div className="body-main-item">
-              {formData.errMsg && <div className="error-block">{formData.errMsg}</div>}
-            </div>
-          </div>
-        )}
-
-        {categorySelected?.items?.length === 0 && (
-          <div className="body-main">
-            <div className="body-main-item">
-              <div className="caption caption-small">
-                You have completed this category
-              </div>
-            </div>
-          </div>
-        )}
-
-        {categorySelected?.items?.length > 0 && (
-          <div className="form-main">
-            <Form.Control
-              ref={(_ref) => {
-                this.inputRef = _ref
-              }}
-              type="text"
-              placeholder="Enter text"
-              value={formData.value}
-              onChange={(e) =>
-                this.setState({
-                  formData: { value: e.target.value, errMsg: '' },
-                })
-              }
-              disabled={formData.errMsg || categorySelected?.items.length === 0}
-            />
-            {formData.errMsg ? (
-              <Button
-                variant="danger"
-                onClick={() => {
-                  this.handleNextVocabulary()
-                }}
-              >
-                NEXT
-              </Button>
-            ) : (
-              <Button
-                variant={formData.value ? 'primary' : 'light'}
-                onClick={() => (formData.value ? this.handleSubmit() : null)}
-              >
-                SUBMIT
-              </Button>
+            {vocalbularySelected.imageUrl && (
+              <img alt={vocalbularySelected.en[0]} src={vocalbularySelected.imageUrl} />
             )}
+
+            <p className="caption">
+              {JSON.stringify(vocalbularySelected.vi)
+                .replace(/"/g, '')
+                .replace(/,/g, ', ')
+                .replace(/\[/g, '')
+                .replace(/]/g, '')}
+            </p>
+
+            {formData.errMsg && <div className="error-block">{formData.errMsg}</div>}
           </div>
         )}
+
+        <div className="form-main">
+          <Form.Control
+            ref={(_ref) => {
+              this.inputRef = _ref
+            }}
+            type="text"
+            placeholder="Enter text"
+            value={formData.value}
+            onChange={(e) =>
+              this.setState({
+                formData: { value: e.target.value, errMsg: '' },
+              })
+            }
+            disabled={formData.errMsg || categorySelected?.items.length === 0}
+          />
+          {formData.errMsg ? (
+            <Button
+              variant="danger"
+              onClick={() => {
+                this.handleNextVocabulary()
+              }}
+            >
+              NEXT
+            </Button>
+          ) : (
+            <Button
+              variant={formData.value ? 'primary' : 'light'}
+              onClick={() => (formData.value ? this.handleSubmit() : null)}
+            >
+              SUBMIT
+            </Button>
+          )}
+        </div>
 
         {confirmChangeCategories && (
           <Modal show={true} onHide={() => this.setState({ confirmChangeCategories: null })}>
