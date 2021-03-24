@@ -26,7 +26,12 @@
 
 .Home .body-main .body-main-item {
   min-height: 100px;
-  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.Home .body-main .body-main-item > div {
+  flex: 1;
 }
 
 .Home .body-main .caption {
@@ -57,12 +62,12 @@
   flex: 1;
   height: 100%;
   font-size: 0.8em;
-  min-height: 62px; 
+  min-height: 40px; 
 }
 
 .Home .form-main button {
   margin-left: 10px;
   min-width: 140px;
-  font-size: 1em;
-  min-height: 62px;
+  font-size: 0.8em;
+  min-height: 40px;
 }
