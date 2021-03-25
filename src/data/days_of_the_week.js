@@ -13,7 +13,7 @@ export default [
   { en: 'saturday', vi: 'thứ 7', imageUrl: '', sound: '' },
   { en: 'sunday', vi: 'chủ nhật', imageUrl: '', sound: '' },
   { en: 'on monday', vi: 'vào thứ 2', imageUrl: '', sound: '' },
-  { en: 'on tuesday', vi: 'vào thú 3', imageUrl: '', sound: '' },
+  { en: 'on tuesday', vi: 'vào thứ 3', imageUrl: '', sound: '' },
   { en: 'on wednesday', vi: 'vào thứ 4', imageUrl: '', sound: '' },
   { en: 'on thursday', vi: 'vào thứ 5', imageUrl: '', sound: '' },
   { en: 'on friday', vi: 'vào thứ 6', imageUrl: '', sound: '' },
