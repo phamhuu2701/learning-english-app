@@ -1,4 +1,4 @@
-const colours = [
+export default [
   { en: 'white', vi: 'màu trắng', imageUrl: '', sound: '' },
   { en: 'yellow', vi: 'màu vàng', imageUrl: '', sound: '' },
   { en: 'orange', vi: 'màu cam', imageUrl: '', sound: '' },
@@ -23,5 +23,3 @@ const colours = [
   { en: 'bright green', vi: 'màu xanh lá tươi', imageUrl: '', sound: '' },
   { en: 'bright blue', vi: 'màu xanh dương tươi', imageUrl: '', sound: '' },
 ]
-
-export default colours

@@ -1,12 +1,14 @@
 import numbers from './numbers'
 import colours from './colours'
 import time from './time'
+import days_of_the_week from './days_of_the_week'
 
 const obj = JSON.parse(
   JSON.stringify({
     numbers,
     colours,
     time,
+    days_of_the_week,
   })
 )
 

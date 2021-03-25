@@ -1,4 +1,4 @@
-const time = [
+export default [
   { en: 'millisecond', vi: 'milli giây', imageUrl: '', sound: '' },
   { en: 'second', vi: 'giây', imageUrl: '', sound: '' },
   { en: 'minute', vi: 'phút', imageUrl: '', sound: '' },
@@ -27,7 +27,7 @@ const time = [
   { en: 'earlier', vi: 'sớm hơn', imageUrl: '', sound: '' },
   { en: 'later', vi: 'muộn hơn', imageUrl: '', sound: '' },
   { en: 'never', vi: 'không bao giờ', imageUrl: '', sound: '' },
-  { en: 'rarely', vi: 'hiểm khi', imageUrl: '', sound: '' },
+  { en: 'rarely', vi: 'hiếm khi', imageUrl: '', sound: '' },
   { en: 'occasionaly = sometimes', vi: 'thỉnh thoảng', imageUrl: '', sound: '' },
   { en: 'often = frequently = usually = normally', vi: 'thường xuyên', imageUrl: '', sound: '' },
   { en: 'always', vi: 'luôn luôn', imageUrl: '', sound: '' },
@@ -36,5 +36,3 @@ const time = [
   { en: 'every month = monthly', vi: 'hàng tháng', imageUrl: '', sound: '' },
   { en: 'every year = yearly', vi: 'hàng năm', imageUrl: '', sound: '' },
 ]
-
-export default time

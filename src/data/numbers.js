@@ -1,4 +1,4 @@
-const numbers = [
+export default [
   { en: 'zero', vi: '0', imageUrl: '', sound: '' },
   { en: 'one', vi: '1', imageUrl: '', sound: '' },
   { en: 'two', vi: '2', imageUrl: '', sound: '' },
@@ -46,7 +46,7 @@ const numbers = [
   { en: 'second', vi: 'thứ 2 (thứ tự)', imageUrl: '', sound: '' },
   { en: 'third', vi: 'thứ 3 (thứ tự)', imageUrl: '', sound: '' },
   { en: 'fourth', vi: 'thứ 4 (thứ tự)', imageUrl: '', sound: '' },
-  { en: 'fifth', vi: 'thú 5 (thứ tự)', imageUrl: '', sound: '' },
+  { en: 'fifth', vi: 'thứ 5 (thứ tự)', imageUrl: '', sound: '' },
   { en: 'sixth', vi: 'thứ 6 (thứ tự)', imageUrl: '', sound: '' },
   { en: 'seventh', vi: 'thứ 7 (thứ tự)', imageUrl: '', sound: '' },
   { en: 'eighth', vi: 'thứ 8 (thứ tự)', imageUrl: '', sound: '' },
@@ -76,7 +76,4 @@ const numbers = [
   { en: 'about, approximately', vi: 'khoảng, xấp xỉ', imageUrl: '', sound: '' },
   { en: 'over, more than', vi: 'hơn, vượt qua', imageUrl: '', sound: '' },
   { en: 'under, less than', vi: 'dưới, chưa tới', imageUrl: '', sound: '' },
-  { en: '', vi: '', imageUrl: '', sound: '' },
 ]
-
-export default numbers
